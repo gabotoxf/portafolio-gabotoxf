@@ -13,6 +13,24 @@ const getImage = (filename: string) => `/img/proyectos/${filename}.png`;
 const projects = [
   {
     tag: "Full Stack",
+    title: "Martinez & Madera",
+    description:
+      "Impulsa la presencia digital de un bufete de abogados — posiciona sus servicios legales, transmite confianza y facilita la captación de clientes a través de una experiencia web moderna y optimizada.",
+    image: "martinezmadera",
+    tech: [
+      "Vue.js",
+      "NestJS",
+      "TypeScript",
+      "PostgreSQL",
+      "SEO",
+      "Responsive Design",
+    ],
+    link: "https://martinez-madera.vercel.app/",
+    github: "#",
+    confidential: false,
+  },
+  {
+    tag: "Full Stack",
     title: "Xinergia",
     description:
       "Elimina horas de trabajo manual en empresas eléctricas — analiza datos con IA y genera reportes técnicos automáticamente en segundos.",
@@ -26,7 +44,7 @@ const projects = [
       "Machine Learning",
       "Prisma ORM",
     ],
-    link: "#",
+    link: "https://xinergia.vercel.app/",
     github: "#",
     confidential: true,
   },
