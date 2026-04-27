@@ -7,8 +7,18 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { getApprovedTestimonials } from "../services/testimonialApi";
 
+interface Testimonial {
+  id: string;
+  name: string;
+  message: string;
+  rating?: number;
+  image?: string;
+  position?: string;
+  company?: string;
+}
+
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,6 +32,7 @@ export default function Testimonials() {
         setLoading(false);
       }
     };
+
     fetchTestimonials();
   }, []);
 
@@ -33,6 +44,7 @@ export default function Testimonials() {
         <h2 className="text-4xl md:text-5xl font-black text-white mb-6 font-display">
           Clientes Satisfechos
         </h2>
+
         <p className="text-lg text-slate-400 max-w-2xl mx-auto">
           Reseñas de quienes han confiado en mi trabajo.
         </p>
@@ -48,6 +60,7 @@ export default function Testimonials() {
             <span className="material-symbols-outlined text-slate-500 text-5xl mb-4 block">
               chat_bubble_outline
             </span>
+
             <p className="text-slate-400 font-medium tracking-wide">
               Aún no hay testimonios cargados
             </p>
@@ -57,12 +70,21 @@ export default function Testimonials() {
             modules={[Autoplay, Pagination, Navigation]}
             spaceBetween={24}
             slidesPerView={1}
-            navigation={{ clickable: true }}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
-            pagination={{ clickable: true }}
+            navigation={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
+              640: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
             }}
             className="pb-10"
             style={{ paddingBottom: "2.5rem" }}
@@ -71,19 +93,19 @@ export default function Testimonials() {
               <SwiperSlide key={testimonial.id}>
                 <div
                   className="relative border border-white/10 rounded-[1.5rem] p-6 hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 h-full flex flex-col group overflow-hidden"
-                  style={{ background: "rgba(255,255,255,0.04)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                  }}
                 >
-                  {/* Glow hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-[1.5rem]" />
 
-                  {/* Rating */}
                   {testimonial.rating && (
                     <div className="flex gap-0.5 mb-4">
                       {[...Array(5)].map((_, i) => (
                         <span
                           key={i}
                           className={`text-sm ${
-                            i < testimonial.rating
+                            i < (testimonial.rating ?? 0)
                               ? "text-accent-lime drop-shadow-[0_0_6px_rgba(190,242,100,0.4)]"
                               : "text-slate-700"
                           }`}
@@ -94,14 +116,10 @@ export default function Testimonials() {
                     </div>
                   )}
 
-                  {/* Mensaje */}
-                  <p
-                    className="text-slate-300 text-sm leading-relaxed relative z-10 mb-4"
-                  >
+                  <p className="text-slate-300 text-sm leading-relaxed relative z-10 mb-4">
                     "{testimonial.message}"
                   </p>
 
-                  {/* Autor */}
                   <div className="flex items-center gap-4 pt-5 border-t border-primary/20 relative z-10">
                     {testimonial.image ? (
                       <img
@@ -112,17 +130,21 @@ export default function Testimonials() {
                     ) : (
                       <div
                         className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 border-2 border-primary/20"
-                        style={{ background: "rgba(140,43,238,0.15)" }}
+                        style={{
+                          background: "rgba(140,43,238,0.15)",
+                        }}
                       >
                         <span className="text-primary font-black text-lg">
                           {testimonial.name?.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     )}
+
                     <div className="min-w-0">
                       <p className="font-black text-white text-sm truncate">
                         {testimonial.name}
                       </p>
+
                       <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold truncate mt-0.5">
                         {[testimonial.position, testimonial.company]
                           .filter(Boolean)
