@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #8c2bee;
+  --color-accent-lime: #bef264;
+  --color-background-light: #f7f6f8;
+  --color-background-dark: #050505;
+  --color-glass-bg: rgba(25, 16, 34, 0.6);
+  --font-display: "Space Grotesk", sans-serif;
+  --radius-default: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  scroll-behavior: smooth;
+}
+
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.orbit-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.orbit-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(140, 43, 238, 0.3);
+  border-radius: 50%;
+}
+
+.horizontal-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.glow-shadow {
+  box-shadow: 0 0 40px -10px rgba(140, 43, 238, 0.5);
+}
+
+.lime-glow {
+  box-shadow: 0 0 15px -2px rgba(190, 242, 100, 0.4);
+}
+
+.projects-slider {
+  --swiper-navigation-color: #8c2bee;
+  --swiper-pagination-color: #8c2bee;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(140, 43, 238, 0.4) !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #bef264 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #bef264 !important;
+  --swiper-navigation-size: 1.8rem !important;
+}
+
+/* ===== Infinite slider ===== */
+.skills-slider {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+  padding: 1rem 0;
+}
+
+.skills-slider.reverse {
+  animation: scroll-reverse 40s linear infinite;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scroll-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.skill-card {
+  min-width: 200px;
+  padding: 1.5rem 1.25rem;
+  border-radius: 1.25rem;
+  background: rgba(15, 10, 25, 0.4);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-card:hover {
+  border-color: rgba(140, 43, 238, 0.3);
+  background: rgba(140, 43, 238, 0.05);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -20px rgba(140, 43, 238, 0.3);
+}
+
+.skill-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  transition: all 0.5s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.skill-card:hover .skill-icon {
+  color: #8c2bee;
+  background: rgba(140, 43, 238, 0.1);
+  border-color: rgba(140, 43, 238, 0.2);
+  transform: rotate(10deg);
+}
+
+.skill-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.25rem;
+}
+
+.skill-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
