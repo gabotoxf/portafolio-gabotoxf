@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import KeepAlive from "@/src/components/KeepAlive";
+import toast, { Toaster } from "react-hot-toast";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -49,6 +50,20 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-background-dark text-white overflow-x-hidden">
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "#0f172a",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,0.05)",
+              borderRadius: "1rem",
+              fontSize: "14px",
+              fontWeight: "bold",
+            },
+          }}
+        />{" "}
+        {/* ← añadir */}
         <KeepAlive />
         <Navbar />
         <main className="flex-1">{children}</main>

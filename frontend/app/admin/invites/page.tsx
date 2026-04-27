@@ -1,41 +1,54 @@
+'use client';
+
 import { useState } from 'react';
-import { createInvite } from '../services/testimonialApi';
+import { createInvite } from '@/src/services/testimonialApi';
+
+interface InviteResult {
+  inviteLink: string;
+}
+
+interface ApiError {
+  status?: number;
+  message?: string;
+}
 
 export default function AdminInvites() {
   const [adminKey, setAdminKey] = useState('');
   const [formData, setFormData] = useState({ clientName: '', clientEmail: '', expiresAt: '' });
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
+  const [result, setResult] = useState<InviteResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setResult(null);
     try {
-      const cleanData = {};
+      const cleanData: Record<string, string> = {};
       if (formData.clientName.trim()) cleanData.clientName = formData.clientName.trim();
       if (formData.clientEmail.trim()) cleanData.clientEmail = formData.clientEmail.trim();
       if (formData.expiresAt.trim()) cleanData.expiresAt = formData.expiresAt.trim();
       const data = await createInvite(cleanData, adminKey);
       setResult(data);
     } catch (err) {
-      setError(err.message || 'Error al generar link');
+      const e = err as ApiError;
+      setError(e.message || 'Error al generar link');
     } finally {
       setLoading(false);
     }
   };
 
   const copyLink = () => {
+    if (!result) return;
     navigator.clipboard.writeText(result.inviteLink);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
   return (
-    <div className="min-h-screen bg-background-dark flex items-center justify-center py-16 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-background-dark flex items-center justify-center py-38 px-4 relative overflow-hidden">
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent-lime/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -144,9 +157,7 @@ export default function AdminInvites() {
         {/* Resultado */}
         {result && (
           <div className="mt-4 glass-morphism border border-primary/20 rounded-[2rem] p-6 space-y-4">
-            <div className="flex items-center gap-2">
-              <p className="text-primary text-xs font-black uppercase tracking-widest">Link generado</p>
-            </div>
+            <p className="text-primary text-xs font-black uppercase tracking-widest">Link generado</p>
             <div className="bg-white/5 border border-white/5 rounded-xl px-4 py-3 break-all">
               <code className="text-slate-300 text-xs">{result.inviteLink}</code>
             </div>
