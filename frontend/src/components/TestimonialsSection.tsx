@@ -72,7 +72,7 @@ export default function Testimonials() {
             slidesPerView={1}
             navigation={true}
             autoplay={{
-              delay: 3000,
+              delay: 7000,
               disableOnInteraction: false,
             }}
             pagination={{
