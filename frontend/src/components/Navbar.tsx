@@ -17,18 +17,25 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    LINKS.forEach(({ href }) => {
-      const el = document.querySelector(href);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(href); },
-        { threshold: 0.4 }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      // Detectar sección activa por posición
+      const scrollY = window.scrollY + window.innerHeight / 3;
+
+      let current = "";
+      LINKS.forEach(({ href }) => {
+        const el = document.querySelector(href) as HTMLElement | null;
+        if (!el) return;
+        if (el.offsetTop <= scrollY) current = href;
+      });
+
+      setActive(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // ejecutar al montar
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -41,7 +48,7 @@ export default function Navbar() {
     e.preventDefault();
     const phone = "573115140908";
     const message = encodeURIComponent(
-      "👋 ¡Hola, Gabriel!\nVi tu portafolio y me gustaría cotizar un proyecto 💻✨\n¿Tienes disponibilidad? 🚀"
+      "👋 ¡Hola, Gabriel!\nVi tu portafolio y me gustaría cotizar un proyecto 💻✨\n¿Tienes disponibilidad? 🚀",
     );
     const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
     const url = isMobile
@@ -52,8 +59,8 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-[95%] max-w-5xl pointer-events-none">
-  <div
-    className={`
+      <div
+        className={`
       rounded-full
       px-4 md:px-6
       py-3
@@ -72,21 +79,30 @@ export default function Navbar() {
 
       ${scrolled ? "shadow-xl shadow-black/30" : ""}
     `}
-  >
-
+      >
         {/* Logo */}
         <Link href="/" className="flex items-center group shrink-0">
-          <span className="text-3xl md:text-4xl font-black text-accent-lime font-mono">{"{"}</span>
-          <span className="text-3xl md:text-4xl font-black text-white font-mono mx-0.5 md:mx-1 group-hover:opacity-80 transition-opacity">gm</span>
-          <span className="text-3xl md:text-4xl font-black text-accent-lime font-mono">{"}"}</span>
+          <span className="text-3xl md:text-4xl font-black text-accent-lime font-mono">
+            {"{"}
+          </span>
+          <span className="text-3xl md:text-4xl font-black text-white font-mono mx-0.5 md:mx-1 group-hover:opacity-80 transition-opacity">
+            gm
+          </span>
+          <span className="text-3xl md:text-4xl font-black text-accent-lime font-mono">
+            {"}"}
+          </span>
         </Link>
 
         {/* Desktop links */}
         <div className="hidden lg:flex items-center gap-0.5 xl:gap-1">
           {LINKS.map(({ label, href }) => (
-            <a key={href} href={href}
+            <a
+              key={href}
+              href={href}
               className={`relative px-3 xl:px-4 py-1.5 text-[13px] xl:text-sm font-medium rounded-full transition-all duration-200 ${
-                active === href ? "text-white bg-white/10" : "text-slate-400 hover:text-white hover:bg-white/5"
+                active === href
+                  ? "text-white bg-white/10"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
               {label}
@@ -98,7 +114,7 @@ export default function Navbar() {
         </div>
 
         {/* CTA desktop */}
-        <a 
+        <a
           href="https://wa.link/r1zxye"
           onClick={handleWhatsApp}
           className="hidden md:flex items-center gap-2 bg-primary text-white px-4 md:px-5 py-2 rounded-full text-sm font-bold hover:brightness-110 hover:scale-105 transition-all shrink-0 cursor-pointer"
@@ -108,26 +124,45 @@ export default function Navbar() {
         </a>
 
         {/* Hamburger */}
-        <button onClick={() => setOpen(!open)} className="md:hidden flex flex-col gap-1.5 p-1"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}>
-          <span className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`} />
-          <span className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden flex flex-col gap-1.5 p-1"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+        >
+          <span
+            className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`}
+          />
+          <span
+            className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
+          />
+          <span
+            className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
+          />
         </button>
 
         {/* Mobile menu */}
-        <div className={`absolute top-full mt-3 left-0 w-full rounded-3xl dark:bg-glass-bg backdrop-blur-xl border border-white/10 shadow-2xl md:hidden overflow-hidden transition-all duration-300 ${open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}>
+        <div
+          className={`absolute top-full mt-3 left-0 w-full rounded-3xl dark:bg-glass-bg backdrop-blur-xl border border-white/10 shadow-2xl md:hidden overflow-hidden transition-all duration-300 ${open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}
+        >
           <div className="flex flex-col items-center gap-1 py-6 px-4">
             {LINKS.map(({ label, href }) => (
-              <a key={href} href={href} onClick={() => setOpen(false)}
+              <a
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
                 className={`w-full text-center px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
-                  active === href ? "bg-white/10 text-white" : "text-slate-400 hover:text-white hover:bg-white/5"
+                  active === href
+                    ? "bg-white/10 text-white"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
                 {label}
               </a>
             ))}
-            <a href="https://wa.link/r1zxye" target="_blank" rel="noopener noreferrer"
+            <a
+              href="https://wa.link/r1zxye"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="mt-2 w-full flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-2xl text-sm font-bold hover:brightness-110 transition-all"
             >
@@ -136,7 +171,6 @@ export default function Navbar() {
             </a>
           </div>
         </div>
-
       </div>
     </nav>
   );

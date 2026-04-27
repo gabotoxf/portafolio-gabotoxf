@@ -13,7 +13,7 @@ const getImage = (filename: string) => `/img/proyectos/${filename}.png`;
 const projects = [
   {
     tag: "Full Stack",
-    title: "Martinez & Madera",
+    title: "Martinez - Madera",
     description:
       "Impulsa la presencia digital de un bufete de abogados — posiciona sus servicios legales, transmite confianza y facilita la captación de clientes a través de una experiencia web moderna y optimizada.",
     image: "martinezmadera",

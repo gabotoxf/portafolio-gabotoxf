@@ -29,8 +29,9 @@ export default function ChatBot() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);  // ✅ tipo añadido
+  const bottomRef = useRef<HTMLDivElement>(null); // ✅ tipo añadido
   const openRef = useRef(open);
+  const autoOpenTimerRef = useRef<number | null>(null); // 👈 añadir esto
 
   const rateLimitRef = useRef({
     count: 0,
@@ -62,7 +63,7 @@ export default function ChatBot() {
   }, [open]);
 
   useEffect(() => {
-    const timerId = window.setTimeout(() => {
+    autoOpenTimerRef.current = window.setTimeout(() => {
       if (openRef.current) return;
       if (THROTTLE_AUTO_OPEN) {
         try {
@@ -76,9 +77,12 @@ export default function ChatBot() {
         } catch {}
       }
     }, AUTO_OPEN_DELAY_MS);
-    return () => window.clearTimeout(timerId);
-  }, []);
 
+    return () => {
+      if (autoOpenTimerRef.current)
+        window.clearTimeout(autoOpenTimerRef.current);
+    };
+  }, []);
   // ✅ text es opcional con valor por defecto ""
   const sendMessage = async (text: string = "") => {
     const userText = (text || input).trim();
@@ -153,7 +157,7 @@ export default function ChatBot() {
     }
   };
 
-  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {  // ✅ tipo añadido
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -180,30 +184,52 @@ export default function ChatBot() {
         >
           <div className="relative flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-gradient-to-r from-white/5 to-transparent">
             <div className="relative bg-primary rounded">
-              <img src={BotAvatar} alt="Gabotoxf AI" className="w-10 h-10 rounded-2xl object-cover" />
+              <img
+                src={BotAvatar}
+                alt="Gabotoxf AI"
+                className="w-10 h-10 rounded-2xl object-cover"
+              />
               <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary border-[2px] border-[#0a0a0c] shadow-sm" />
             </div>
             <div className="flex-1">
-              <h3 className="text-white font-bold text-sm tracking-tight">Gabotoxf AI</h3>
+              <h3 className="text-white font-bold text-sm tracking-tight">
+                Gabotoxf AI
+              </h3>
               <div className="flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
-                <p className="text-accent-lime text-[10px] font-medium uppercase tracking-wider">En línea</p>
+                <p className="text-accent-lime text-[10px] font-medium uppercase tracking-wider">
+                  En línea
+                </p>
               </div>
             </div>
-            <button onClick={() => setOpen(false)} className="group p-1.5 rounded-xl hover:bg-white/10 transition-all">
-              <span className="material-symbols-outlined text-slate-400 group-hover:text-white text-[20px]">close</span>
+            <button
+              onClick={() => setOpen(false)}
+              className="group w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-all"
+            >
+              <span className="material-symbols-outlined text-slate-400 group-hover:text-white text-[20px]">
+                close
+              </span>
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 scrollbar-thin scrollbar-thumb-white/10 hover:scrollbar-thumb-white/20 transition-all">
             {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} transition-all duration-300`}>
-                <div className={`max-w-[88%] px-4 py-3 rounded-[1.25rem] text-sm leading-relaxed shadow-sm whitespace-pre-line ${
-                  msg.role === "user"
-                    ? "bg-gradient-to-br from-primary to-fuchsia-600 text-white rounded-tr-none font-medium"
-                    : "bg-white/5 border border-white/10 text-slate-200 rounded-tl-none"
-                }`}>
-                  {renderMessage(msg.content, messages.slice(0, i + 1), buildWhatsAppLink)}
+              <div
+                key={i}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} transition-all duration-300`}
+              >
+                <div
+                  className={`max-w-[88%] px-4 py-3 rounded-[1.25rem] text-sm leading-relaxed shadow-sm whitespace-pre-line ${
+                    msg.role === "user"
+                      ? "bg-gradient-to-br from-primary to-fuchsia-600 text-white rounded-tr-none font-medium"
+                      : "bg-white/5 border border-white/10 text-slate-200 rounded-tl-none"
+                  }`}
+                >
+                  {renderMessage(
+                    msg.content,
+                    messages.slice(0, i + 1),
+                    buildWhatsAppLink,
+                  )}
                 </div>
               </div>
             ))}
@@ -211,8 +237,11 @@ export default function ChatBot() {
             {showSuggestions && (
               <div className="flex flex-col gap-2 pt-1">
                 {SUGGESTIONS.map((s) => (
-                  <button key={s} onClick={() => sendMessage(s)}
-                    className="text-left text-xs px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:border-primary/50 hover:bg-primary/10 hover:text-white transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0">
+                  <button
+                    key={s}
+                    onClick={() => sendMessage(s)}
+                    className="text-left text-xs px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:border-primary/50 hover:bg-primary/10 hover:text-white transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+                  >
                     {s}
                   </button>
                 ))}
@@ -222,9 +251,18 @@ export default function ChatBot() {
             {loading && (
               <div className="flex justify-start">
                 <div className="bg-white/10 px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: "300ms" }} />
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                    style={{ animationDelay: "0ms" }}
+                  />
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                    style={{ animationDelay: "150ms" }}
+                  />
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                    style={{ animationDelay: "300ms" }}
+                  />
                 </div>
               </div>
             )}
@@ -241,9 +279,14 @@ export default function ChatBot() {
                 placeholder="Escribe tu pregunta..."
                 className="flex-1 bg-transparent text-white text-sm placeholder-slate-600 focus:outline-none"
               />
-              <button onClick={() => sendMessage()} disabled={!input.trim() || loading}
-                className="text-slate-500 hover:text-primary transition-colors disabled:opacity-30">
-                <span className="material-symbols-outlined text-[20px]">send</span>
+              <button
+                onClick={() => sendMessage()}
+                disabled={!input.trim() || loading}
+                className="text-slate-500 hover:text-primary transition-colors disabled:opacity-30"
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  send
+                </span>
               </button>
             </div>
           </div>
@@ -251,28 +294,52 @@ export default function ChatBot() {
       </div>
 
       <button
-        onClick={() => setOpen((v) => { const next = !v; if (next) setHasUnread(false); return next; })}
+        onClick={() => {
+          if (autoOpenTimerRef.current) {
+            window.clearTimeout(autoOpenTimerRef.current);
+            autoOpenTimerRef.current = null;
+          }
+          setOpen((v) => {
+            const next = !v;
+            if (next) setHasUnread(false);
+            return next;
+          });
+        }}
         className={`group fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 shadow-2xl active:scale-95 ${
-          open ? "bg-slate-800 rotate-90" : "bg-gradient-to-tr from-primary via-primary to-fuchsia-500 hover:scale-110"
+          open
+            ? "bg-slate-800 rotate-90"
+            : "bg-gradient-to-tr from-primary via-primary to-fuchsia-500 hover:scale-110"
         }`}
         aria-label="Abrir asistente IA"
       >
-        {!open && <div className="absolute inset-0 rounded-full bg-primary/40 animate-ping opacity-20 group-hover:opacity-40 transition-opacity" />}
-        <div className={`absolute inset-0 rounded-full transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100 bg-white/10 blur-[2px]"}`} />
+        {!open && (
+          <div className="absolute inset-0 rounded-full bg-primary/40 animate-ping opacity-20 group-hover:opacity-40 transition-opacity" />
+        )}
+        <div
+          className={`absolute inset-0 rounded-full transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100 bg-white/10 blur-[2px]"}`}
+        />
         {!open && (
           <span className="hidden sm:flex absolute right-[80px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-2xl bg-slate-900/95 backdrop-blur-md border border-white/10 px-4 py-2 text-sm font-medium text-white shadow-2xl opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
             {hasUnread ? "¡Nuevo mensaje!" : "¿Necesitas ayuda?"}
           </span>
         )}
         {open ? (
-          <span className="material-symbols-outlined text-white text-[24px]">close</span>
+          <span className="material-symbols-outlined text-white text-[24px]">
+            close
+          </span>
         ) : (
-          <img src={BotAvatar} alt="Gabotoxf AI" className="w-15 h-15 rounded-full object-cover" />
+          <img
+            src={BotAvatar}
+            alt="Gabotoxf AI"
+            className="w-15 h-15 rounded-full object-cover"
+          />
         )}
         {!open && (
           <div className="absolute -bottom-1 -left-1 flex items-center gap-1 rounded-full bg-slate-900/90 border border-white/20 px-2 py-0.5 shadow-lg backdrop-blur-sm">
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] font-bold text-white tracking-wider">IA</span>
+            <span className="text-[10px] font-bold text-white tracking-wider">
+              IA
+            </span>
           </div>
         )}
         {hasUnread && !open && (
