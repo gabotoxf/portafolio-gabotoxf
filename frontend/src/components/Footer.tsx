@@ -127,7 +127,7 @@ export default function Footer() {
             </p>
             <div className="space-y-3">
               <a
-                href="#"
+                href="https://wa.link/r1zxye"
                 onClick={handleWhatsApp}
                 className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group"
               >
