@@ -48,9 +48,11 @@ export default function AdminInvites() {
   };
 
   return (
-    <div className="min-h-screen bg-background-dark flex items-center justify-center py-38 px-4 relative overflow-hidden">
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent-lime/5 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen dark:bg-background-dark bg-background-light flex items-center justify-center py-38 px-4 relative overflow-hidden">
+
+      {/* Glows — solo visibles en dark */}
+      <div className="absolute -top-32 -right-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none dark:opacity-100 opacity-0 transition-opacity" />
+      <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent-lime/5 rounded-full blur-[120px] pointer-events-none dark:opacity-100 opacity-0 transition-opacity" />
 
       <div className="relative z-10 w-full max-w-md">
 
@@ -59,23 +61,25 @@ export default function AdminInvites() {
           <span className="text-primary font-bold tracking-[0.25em] text-xs uppercase">
             Acceso restringido
           </span>
-          <h1 className="text-4xl font-black text-white leading-tight font-display">
+          <h1 className="text-4xl font-black dark:text-white text-slate-900 leading-tight font-display">
             Panel de{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-lime">
+            <span className="dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-primary dark:to-accent-lime text-violet-700">
               invitaciones.
             </span>
           </h1>
-          <p className="text-slate-400 text-sm">
+          <p className="dark:text-slate-400 text-slate-600 text-sm">
             Genera links únicos para que tus clientes dejen su testimonio.
           </p>
         </div>
 
-        {/* Card */}
-        <form onSubmit={handleSubmit} className="glass-morphism border border-white/5 rounded-[2rem] p-8 space-y-6">
+        {/* Card formulario */}
+        <form onSubmit={handleSubmit} className="rounded-[2rem] p-8 space-y-6 shadow-sm border
+          dark:bg-zinc-900/70  bg-[#f7efff]
+          dark:border-white/5   border-[#cdc9de]">
 
           {/* Admin key */}
-          <div className="space-y-2">
-            <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-500 mb-2">
               Clave de Admin <span className="text-primary">*</span>
             </label>
             <input
@@ -84,52 +88,81 @@ export default function AdminInvites() {
               onChange={(e) => setAdminKey(e.target.value)}
               placeholder="••••••••"
               required
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+              className="w-full rounded-xl px-4 py-3 text-sm border
+                dark:bg-white/5       bg-[#f5f0ff]
+                dark:border-white/10  border-[#cdc9de]
+                dark:text-white       text-slate-900
+                dark:placeholder-slate-600 placeholder-slate-400
+                focus:outline-none focus:border-primary/50 transition-colors"
             />
           </div>
 
-          <div className="border-t border-white/5 pt-6 space-y-4">
-            <p className="text-xs font-black uppercase tracking-widest text-slate-500">
-              Datos del cliente <span className="text-slate-700 normal-case font-normal">— opcional</span>
+          {/* Divisor */}
+          <div className="border-t dark:border-white/5 border-[#cdc9de] pt-6 space-y-4">
+            <p className="text-xs font-black uppercase tracking-widest dark:text-slate-500 text-slate-500">
+              Datos del cliente{' '}
+              <span className="dark:text-slate-700 text-slate-400 normal-case font-normal">— opcional</span>
             </p>
 
-            <div className="space-y-2">
-              <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Nombre</label>
+            {/* Nombre */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-500 mb-2">
+                Nombre
+              </label>
               <input
                 type="text"
                 placeholder="Ej. Juan Pérez"
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                className="w-full rounded-xl px-4 py-3 text-sm border
+                  dark:bg-white/5       bg-[#f5f0ff]
+                  dark:border-white/10  border-[#cdc9de]
+                  dark:text-white       text-slate-900
+                  dark:placeholder-slate-600 placeholder-slate-400
+                  focus:outline-none focus:border-primary/50 transition-colors"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Correo</label>
+            {/* Correo */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-500 mb-2">
+                Correo
+              </label>
               <input
                 type="email"
                 placeholder="cliente@email.com"
                 value={formData.clientEmail}
                 onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors"
+                className="w-full rounded-xl px-4 py-3 text-sm border
+                  dark:bg-white/5       bg-[#f5f0ff]
+                  dark:border-white/10  border-[#cdc9de]
+                  dark:text-white       text-slate-900
+                  dark:placeholder-slate-600 placeholder-slate-400
+                  focus:outline-none focus:border-primary/50 transition-colors"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Expira el</label>
+            {/* Fecha */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-500 mb-2">
+                Expira el
+              </label>
               <input
                 type="date"
                 value={formData.expiresAt}
                 onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/50 transition-colors"
-                style={{ colorScheme: 'dark' }}
+                className="w-full rounded-xl px-4 py-3 text-sm border
+                  dark:bg-white/5       bg-[#f5f0ff]
+                  dark:border-white/10  border-[#cdc9de]
+                  dark:text-white       text-slate-900
+                  focus:outline-none focus:border-primary/50 transition-colors"
               />
             </div>
           </div>
 
           {/* Error */}
           {error && (
-            <p className="text-red-400 text-xs flex items-center gap-2">
+            <p className="text-red-500 text-xs flex items-center gap-2">
               <span className="material-symbols-outlined text-[14px]">error</span>
               {error}
             </p>
@@ -138,7 +171,7 @@ export default function AdminInvites() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary hover:brightness-110 text-white rounded-xl py-3.5 font-bold text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+            className="w-full bg-primary hover:brightness-110 text-white rounded-xl py-3.5 font-bold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
           >
             {loading ? (
               <>
@@ -156,21 +189,33 @@ export default function AdminInvites() {
 
         {/* Resultado */}
         {result && (
-          <div className="mt-4 glass-morphism border border-primary/20 rounded-[2rem] p-6 space-y-4">
+          <div className="mt-4 rounded-[2rem] p-6 space-y-4 shadow-sm border
+            dark:bg-white/[0.04]  bg-[#ede8f5]
+            dark:border-primary/20 border-[#cdc9de]">
+
             <p className="text-primary text-xs font-black uppercase tracking-widest">Link generado</p>
-            <div className="bg-white/5 border border-white/5 rounded-xl px-4 py-3 break-all">
-              <code className="text-slate-300 text-xs">{result.inviteLink}</code>
+
+            <div className="rounded-xl px-4 py-3 break-all border
+              dark:bg-white/5     bg-[#f5f0ff]
+              dark:border-white/5 border-[#cdc9de]">
+              <code className="dark:text-slate-300 text-slate-600 text-xs">{result.inviteLink}</code>
             </div>
+
             <button
               onClick={copyLink}
-              className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold transition-all rounded-xl border border-white/10 hover:border-primary/30 hover:bg-primary/5"
-              style={{ color: copied ? '#fff' : '#94a3b8' }}
+              className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold transition-all rounded-xl border
+                dark:border-white/10  border-[#cdc9de]
+                dark:hover:border-primary/30 hover:border-primary/30
+                dark:hover:bg-primary/5     hover:bg-primary/5
+                dark:text-slate-400 text-slate-500
+                dark:hover:text-white hover:text-violet-700"
             >
               <span className="material-symbols-outlined text-[16px]">
                 {copied ? 'check' : 'content_copy'}
               </span>
               {copied ? '¡Copiado!' : 'Copiar link'}
             </button>
+
           </div>
         )}
 

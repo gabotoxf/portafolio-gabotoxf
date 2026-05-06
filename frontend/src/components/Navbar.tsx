@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTheme } from "@/src/contexts/ThemeContext";
 
 const LINKS = [
   { label: "Sobre mí", href: "#about" },
@@ -15,6 +16,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,13 +73,12 @@ export default function Navbar() {
       duration-300
       pointer-events-auto
 
-      bg-white/20
-      dark:bg-zinc-900/70
+      dark:bg-zinc-900/70 bg-white
       backdrop-blur-xl
-      border border-white/20
-      shadow-lg shadow-black/20
+      dark:border-white/20 border-slate-500
+      dark:shadow-lg dark:shadow-black/20 shadow-lg shadow-slate-300/20
 
-      ${scrolled ? "shadow-xl shadow-black/30" : ""}
+      ${scrolled ? "dark:shadow-xl dark:shadow-black/30 shadow-xl shadow-slate-300/30" : ""}
     `}
       >
         {/* Logo */}
@@ -85,7 +86,7 @@ export default function Navbar() {
           <span className="text-3xl md:text-4xl font-black text-accent-lime font-mono">
             {"{"}
           </span>
-          <span className="text-3xl md:text-4xl font-black text-white font-mono mx-0.5 md:mx-1 group-hover:opacity-80 transition-opacity">
+          <span className="text-3xl md:text-4xl font-black dark:text-white text-slate-900 font-mono mx-0.5 md:mx-1 group-hover:opacity-80 transition-opacity">
             gm
           </span>
           <span className="text-3xl md:text-4xl font-black text-accent-lime font-mono">
@@ -101,8 +102,8 @@ export default function Navbar() {
               href={href}
               className={`relative px-3 xl:px-4 py-1.5 text-[13px] xl:text-sm font-medium rounded-full transition-all duration-200 ${
                 active === href
-                  ? "text-white bg-white/10"
-                  : "text-slate-400 hover:text-white hover:bg-white/5"
+                  ? "dark:text-white text-black dark:bg-white/10 bg-slate-300"
+                  : "dark:text-slate-400 text-slate-700 dark:hover:text-white hover:text-black dark:hover:bg-white/5 hover:bg-slate-200"
               }`}
             >
               {label}
@@ -113,36 +114,64 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* CTA desktop */}
-        <a
-          href="https://wa.link/r1zxye"
-          onClick={handleWhatsApp}
-          className="hidden md:flex items-center gap-2 bg-primary text-white px-4 md:px-5 py-2 rounded-full text-sm font-bold hover:brightness-110 hover:scale-105 transition-all shrink-0 cursor-pointer"
-        >
-          <span className="hidden xl:inline">Hablemos</span>
-          <i className="fa-brands fa-whatsapp text-base" />
-        </a>
+        <div className="flex items-center gap-4">
+          {/* Theme Toggle */}
+          {/* <button
+            onClick={toggleTheme}
+            className="hidden md:flex items-center justify-center w-9 h-9 rounded-full dark:bg-white/10 bg-slate-100 dark:hover:bg-white/20 hover:bg-slate-200 transition-all shrink-0 cursor-pointer"
+            aria-label="Cambiar tema"
+          >
+            {theme === "dark" ? (
+              <i className="fa-solid fa-sun text-accent-lime text-sm" />
+            ) : (
+              <i className="fa-solid fa-moon text-primary text-sm" />
+            )}
+          </button> */}
+
+          {/* CTA desktop */}
+          <a
+            href="https://wa.link/r1zxye"
+            onClick={handleWhatsApp}
+            className="hidden md:flex items-center gap-2 bg-primary text-white px-4 md:px-5 py-2 rounded-full text-sm font-bold hover:brightness-110 hover:scale-105 transition-all shrink-0 cursor-pointer"
+          >
+            <span className="hidden xl:inline">Hablemos</span>
+            <i className="fa-brands fa-whatsapp text-base" />
+          </a>
+        </div>
 
         {/* Hamburger */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden flex flex-col gap-1.5 p-1"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-        >
-          <span
-            className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`}
-          />
-          <span
-            className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
-          />
-          <span
-            className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
-          />
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          {/* <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center w-8 h-8 rounded-full dark:bg-white/10 bg-slate-100 dark:hover:bg-white/20 hover:bg-slate-200 transition-all"
+            aria-label="Cambiar tema"
+          >
+            {theme === "dark" ? (
+              <i className="fa-solid fa-sun text-accent-lime text-xs" />
+            ) : (
+              <i className="fa-solid fa-moon text-primary text-xs" />
+            )}
+          </button> */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex flex-col gap-1.5 p-1"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          >
+            <span
+              className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "rotate-45 translate-y-2" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-6 bg-current transition-all duration-300 ${open ? "-rotate-45 -translate-y-2" : ""}`}
+            />
+          </button>
+        </div>
 
         {/* Mobile menu */}
         <div
-          className={`absolute top-full mt-3 left-0 w-full rounded-3xl dark:bg-glass-bg backdrop-blur-xl border border-white/10 shadow-2xl md:hidden overflow-hidden transition-all duration-300 ${open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}
+          className={`absolute top-full mt-3 left-0 w-full rounded-3xl dark:bg-glass-bg bg-white/95 backdrop-blur-xl dark:border-white/10 border-slate-200 shadow-2xl md:hidden overflow-hidden transition-all duration-300 ${open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}
         >
           <div className="flex flex-col items-center gap-1 py-6 px-4">
             {LINKS.map(({ label, href }) => (
@@ -152,8 +181,8 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className={`w-full text-center px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
                   active === href
-                    ? "bg-white/10 text-white"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "dark:bg-white/10 bg-slate-100 dark:text-white text-slate-900"
+                    : "dark:text-slate-400 text-slate-500 dark:hover:text-white hover:text-slate-900 dark:hover:bg-white/5 hover:bg-slate-50"
                 }`}
               >
                 {label}

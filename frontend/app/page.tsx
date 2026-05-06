@@ -8,7 +8,7 @@ import Chatbot from "@/src/components/Chatbot/index";
 
 export default function HomePage() {
   return (
-    <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
+    <div className="dark:bg-background-dark bg-background-light dark:text-white text-slate-900 transition-colors duration-300 overflow-x-hidden">
       <Hero />
       <About />
       <Skills />

@@ -118,27 +118,27 @@ export default function ReferenceForm() {
 
   /* ── Loading ── */
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-background-dark">
+    <div className="min-h-screen flex items-center justify-center dark:bg-background-dark bg-background-light">
       <div className="text-center space-y-4">
         <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Validando acceso...</p>
+        <p className="dark:text-slate-500 text-slate-400 text-xs font-bold uppercase tracking-widest">Validando acceso...</p>
       </div>
     </div>
   );
 
   /* ── Error de token ── */
   if (error && !success) return (
-    <div className="min-h-screen flex items-center justify-center bg-background-dark px-4">
-      <div className="glass-morphism border border-white/5 rounded-3xl p-10 max-w-sm w-full text-center space-y-5">
+    <div className="min-h-screen flex items-center justify-center dark:bg-background-dark bg-background-light px-4">
+      <div className="dark:bg-white/[0.04] bg-white dark:border-white/5 border-slate-200 rounded-3xl p-10 max-w-sm w-full text-center space-y-5 shadow-lg">
         <div className="w-14 h-14 bg-red-500/10 border border-red-500/20 rounded-full flex items-center justify-center mx-auto">
           <span className="material-symbols-outlined text-red-400 text-2xl">lock</span>
         </div>
         <div>
-          <h2 className="text-xl font-black text-white mb-2 font-display">Acceso denegado</h2>
-          <p className="text-slate-500 text-sm leading-relaxed">{error}</p>
+          <h2 className="text-xl font-black dark:text-white text-slate-900 mb-2 font-display">Acceso denegado</h2>
+          <p className="dark:text-slate-500 text-slate-400 text-sm leading-relaxed">{error}</p>
         </div>
         <button onClick={() => router.push('/')}
-          className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl text-sm font-bold transition-all">
+          className="w-full py-3 dark:bg-white/5 bg-slate-100 hover:bg-slate-200 dark:hover:bg-white/10 dark:border-white/10 border-slate-200 dark:text-white text-slate-900 rounded-xl text-sm font-bold transition-all">
           Volver al inicio
         </button>
       </div>
@@ -147,17 +147,17 @@ export default function ReferenceForm() {
 
   /* ── Formulario ── */
   return (
-    <div className="min-h-screen bg-background-dark flex flex-col relative overflow-hidden pt-32 lg:pt-28">
+    <div className="min-h-screen dark:bg-background-dark bg-background-light flex flex-col relative overflow-hidden pt-32 lg:pt-28">
       {success && (
-        <div className="fixed inset-0 z-[100] backdrop-blur-xl bg-background-dark/80 flex items-center justify-center p-6 text-center animate-in fade-in duration-700">
+        <div className="fixed inset-0 z-[100] backdrop-blur-xl dark:bg-background-dark/80 bg-background-light/85 flex items-center justify-center p-6 text-center animate-in fade-in duration-700">
           <div className="max-w-md space-y-8 relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/20 rounded-full blur-[100px] -z-10" />
             <div className="w-24 h-24 bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-primary/20 animate-bounce-slow">
               <span className="material-symbols-outlined text-primary text-5xl">check_circle</span>
             </div>
             <div className="space-y-4">
-              <h2 className="text-4xl font-black text-white font-display tracking-tight">¡Referencia Enviada!</h2>
-              <p className="text-slate-400 text-lg leading-relaxed">
+              <h2 className="text-4xl font-black dark:text-white text-slate-900 font-display tracking-tight">¡Referencia Enviada!</h2>
+              <p className="dark:text-slate-400 text-slate-600 text-lg leading-relaxed">
                 Muchas gracias por tu tiempo. Tu testimonio ha sido recibido y será revisado pronto.
               </p>
             </div>
@@ -166,8 +166,8 @@ export default function ReferenceForm() {
                 className="px-10 py-4 bg-primary hover:brightness-110 text-white rounded-2xl text-sm font-black uppercase tracking-[0.2em] transition-all shadow-xl shadow-primary/20 active:scale-95">
                 Volver al inicio
               </button>
-              <div className="flex items-center gap-3 text-slate-500 text-xs font-bold uppercase tracking-widest">
-                <div className="w-4 h-4 border-2 border-slate-700 border-t-primary rounded-full animate-spin" />
+              <div className="flex items-center gap-3 dark:text-slate-500 text-slate-400 text-xs font-bold uppercase tracking-widest">
+                <div className="w-4 h-4 border-2 dark:border-slate-700 border-slate-300 border-t-primary rounded-full animate-spin" />
                 Redirigiendo automáticamente...
               </div>
             </div>
@@ -185,33 +185,33 @@ export default function ReferenceForm() {
 
           <div className="mb-10 space-y-3">
             <span className="text-primary font-bold tracking-[0.25em] text-xs uppercase">Invitación exclusiva</span>
-            <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight font-display">
+            <h1 className="text-4xl lg:text-5xl font-black dark:text-white text-slate-900 leading-tight font-display">
               Deja tu{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent-lime">
                 referencia.
               </span>
             </h1>
-            <p className="text-slate-400 text-base max-w-sm">
+            <p className="dark:text-slate-400 text-slate-600 text-base max-w-sm">
               Tu opinión ayuda a que mi trabajo llegue a más personas como tú.
             </p>
           </div>
 
-          <div className="glass-morphism border border-white/5 rounded-[2rem] overflow-hidden">
+          <div className="dark:bg-white/[0.04] bg-white dark:border-white/5 border-slate-200 rounded-[2rem] overflow-hidden shadow-lg">
             <div className="grid grid-cols-1 lg:grid-cols-2">
 
-              {/* ── Izquierda ── */}
-              <div className="p-8 border-b border-white/5 lg:border-b-0 lg:border-r flex flex-col gap-8">
+              {/* Izquierda */}
+              <div className="p-8 dark:border-b border-slate-200 dark:border-white/5 lg:border-b-0 lg:border-r flex flex-col gap-8">
 
                 <div className="space-y-3">
-                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Foto de perfil</label>
+                  <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">Foto de perfil</label>
                   <div className="relative w-fit">
                     <input type="file" accept="image/*" onChange={handleImage} disabled={submitting}
                       className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full" />
                     <div className={`w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center overflow-hidden transition-all
-                      ${imagePreview ? 'border-primary/50' : 'border-white/10 hover:border-primary/30'}`}>
+                      ${imagePreview ? 'border-primary/50' : 'dark:border-white/10 border-slate-200 dark:hover:border-primary/30 hover:border-primary/30'}`}>
                       {imagePreview
                         ? <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
-                        : <span className="material-symbols-outlined text-slate-600 text-2xl pointer-events-none">add_a_photo</span>
+                        : <span className="material-symbols-outlined dark:text-slate-600 text-slate-400 text-2xl pointer-events-none">add_a_photo</span>
                       }
                     </div>
                     {imagePreview && (
@@ -222,38 +222,38 @@ export default function ReferenceForm() {
                       </button>
                     )}
                   </div>
-                  <p className="text-[10px] text-slate-600 uppercase tracking-widest font-bold">Opcional</p>
+                  <p className="text-[10px] dark:text-slate-600 text-slate-400 uppercase tracking-widest font-bold">Opcional</p>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">
+                  <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">
                     Nombre <span className="text-primary">*</span>
                   </label>
                   <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={submitting}
                     placeholder="Tu nombre" required
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50" />
+                    className="w-full dark:bg-white/5 bg-slate-50 dark:border-white/10 border-slate-200 rounded-xl px-4 py-3 dark:text-white text-slate-900 dark:placeholder-slate-600 placeholder-slate-400 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50" />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Cargo</label>
+                  <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">Cargo</label>
                   <input type="text" name="position" value={formData.position} onChange={handleChange} disabled={submitting}
                     placeholder="Ej. CEO"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50" />
+                    className="w-full dark:bg-white/5 bg-slate-50 dark:border-white/10 border-slate-200 rounded-xl px-4 py-3 dark:text-white text-slate-900 dark:placeholder-slate-600 placeholder-slate-400 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50" />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Empresa</label>
+                  <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">Empresa</label>
                   <input type="text" name="company" value={formData.company} onChange={handleChange} disabled={submitting}
                     placeholder="Ej. TechCorp"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50" />
+                    className="w-full dark:bg-white/5 bg-slate-50 dark:border-white/10 border-slate-200 rounded-xl px-4 py-3 dark:text-white text-slate-900 dark:placeholder-slate-600 placeholder-slate-400 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50" />
                 </div>
               </div>
 
-              {/* ── Derecha ── */}
+              {/* Derecha */}
               <div className="p-8 flex flex-col gap-6">
 
                 <div className="space-y-3">
-                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">Calificación</label>
+                  <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">Calificación</label>
                   <div className="flex gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button key={star} type="button"
@@ -261,7 +261,7 @@ export default function ReferenceForm() {
                         disabled={submitting}
                         className={`text-2xl transition-all hover:scale-125 active:scale-95 disabled:opacity-50 ${star <= formData.rating
                           ? 'text-accent-lime drop-shadow-[0_0_8px_rgba(190,242,100,0.5)]'
-                          : 'text-slate-700'}`}>
+                          : 'dark:text-slate-700 text-slate-300'}`}>
                         ★
                       </button>
                     ))}
@@ -269,13 +269,13 @@ export default function ReferenceForm() {
                 </div>
 
                 <div className="space-y-2 flex-1">
-                  <label className="block text-xs font-bold uppercase tracking-widest text-slate-500">
+                  <label className="block text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">
                     Testimonio <span className="text-primary">*</span>
                   </label>
                   <textarea name="message" value={formData.message} onChange={handleChange} disabled={submitting}
                     placeholder="Cuéntanos cómo fue tu experiencia..." required rows={5}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50 resize-none" />
-                  <p className={`text-[10px] font-bold uppercase tracking-widest ${formData.message.length < 20 ? 'text-slate-600' : 'text-accent-lime'}`}>
+                    className="w-full dark:bg-white/5 bg-slate-50 dark:border-white/10 border-slate-200 rounded-xl px-4 py-3 dark:text-white text-slate-900 dark:placeholder-slate-600 placeholder-slate-400 text-sm focus:outline-none focus:border-primary/50 transition-colors disabled:opacity-50 resize-none" />
+                  <p className={`text-[10px] font-bold uppercase tracking-widest ${formData.message.length < 20 ? 'dark:text-slate-600 text-slate-400' : 'text-accent-lime'}`}>
                     {formData.message.length} / 20 mín.
                   </p>
                 </div>
@@ -302,7 +302,7 @@ export default function ReferenceForm() {
                   )}
                 </button>
 
-                <p className="text-center text-xs text-slate-600">
+                <p className="text-center text-xs dark:text-slate-600 text-slate-400">
                   Tu referencia pasa por revisión antes de publicarse.
                 </p>
               </div>

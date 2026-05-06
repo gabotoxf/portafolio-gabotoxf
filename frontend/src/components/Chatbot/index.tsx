@@ -29,9 +29,9 @@ export default function ChatBot() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null); // ✅ tipo añadido
+  const bottomRef = useRef<HTMLDivElement>(null);
   const openRef = useRef(open);
-  const autoOpenTimerRef = useRef<number | null>(null); // 👈 añadir esto
+  const autoOpenTimerRef = useRef<number | null>(null);
 
   const rateLimitRef = useRef({
     count: 0,
@@ -83,7 +83,7 @@ export default function ChatBot() {
         window.clearTimeout(autoOpenTimerRef.current);
     };
   }, []);
-  // ✅ text es opcional con valor por defecto ""
+
   const sendMessage = async (text: string = "") => {
     const userText = (text || input).trim();
     if (!userText || loading) return;
@@ -141,7 +141,6 @@ export default function ChatBot() {
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err) {
       clearTimeout(timeoutId);
-      // ✅ cast a Error
       const isTimeout = (err as Error).name === "AbortError";
       setMessages((prev) => [
         ...prev,
@@ -179,20 +178,30 @@ export default function ChatBot() {
         }`}
       >
         <div
-          className="rounded-[2rem] overflow-hidden border border-white/20 bg-[#0a0a0c]/90 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col ring-1 ring-white/10"
+          className="rounded-[2rem] overflow-hidden border
+            dark:border-white/20  border-[#cdc9de]
+            dark:bg-[#0a0a0c]/90  bg-white/80
+            backdrop-blur-2xl
+            dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] shadow-[0_20px_50px_rgba(0,0,0,0.15)]
+            flex flex-col
+            dark:ring-white/10 ring-slate-400/50 ring-1"
           style={{ height: "min(500px, 80vh)" }}
         >
-          <div className="relative flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-gradient-to-r from-white/5 to-transparent">
+          {/* Header */}
+          <div className="relative flex items-center gap-3 px-5 py-4 border-b
+            dark:border-white/10  border-[#cdc9de]
+            dark:bg-gradient-to-r dark:from-white/5 from-slate-50/80 to-transparent">
             <div className="relative bg-primary rounded">
               <img
                 src={BotAvatar}
                 alt="Gabotoxf AI"
                 className="w-10 h-10 rounded-2xl object-cover"
               />
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary border-[2px] border-[#0a0a0c] shadow-sm" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary border-[2px]
+                dark:border-[#0a0a0c] border-white/80 shadow-sm" />
             </div>
             <div className="flex-1">
-              <h3 className="text-white font-bold text-sm tracking-tight">
+              <h3 className="dark:text-white text-slate-900 font-bold text-sm tracking-tight">
                 Gabotoxf AI
               </h3>
               <div className="flex items-center gap-1">
@@ -204,14 +213,15 @@ export default function ChatBot() {
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="group w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-all"
+              className="group w-8 h-8 flex items-center justify-center rounded-full dark:hover:bg-white/10 hover:bg-slate-100/80 transition-all"
             >
-              <span className="material-symbols-outlined text-slate-400 group-hover:text-white text-[20px]">
+              <span className="material-symbols-outlined dark:text-slate-400 text-slate-500 group-hover:text-primary text-[20px]">
                 close
               </span>
             </button>
           </div>
 
+          {/* Messages */}
           <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 scrollbar-thin scrollbar-thumb-white/10 hover:scrollbar-thumb-white/20 transition-all">
             {messages.map((msg, i) => (
               <div
@@ -222,7 +232,7 @@ export default function ChatBot() {
                   className={`max-w-[88%] px-4 py-3 rounded-[1.25rem] text-sm leading-relaxed shadow-sm whitespace-pre-line ${
                     msg.role === "user"
                       ? "bg-gradient-to-br from-primary to-fuchsia-600 text-white rounded-tr-none font-medium"
-                      : "bg-white/5 border border-white/10 text-slate-200 rounded-tl-none"
+                      : "border dark:bg-white/5 bg-slate-100/60 dark:border-white/10 border-[#cdc9de] dark:text-slate-200 text-slate-800 rounded-tl-none"
                   }`}
                 >
                   {renderMessage(
@@ -240,7 +250,14 @@ export default function ChatBot() {
                   <button
                     key={s}
                     onClick={() => sendMessage(s)}
-                    className="text-left text-xs px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:border-primary/50 hover:bg-primary/10 hover:text-white transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+                    className="text-left text-xs px-4 py-2.5 rounded-xl border
+                      dark:border-white/10  border-[#cdc9de]
+                      dark:bg-white/5       bg-slate-100/60
+                      dark:text-slate-300   text-slate-700
+                      hover:border-primary/50
+                      dark:hover:bg-primary/10 hover:bg-primary/5
+                      dark:hover:text-white    hover:text-primary
+                      transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
                   >
                     {s}
                   </button>
@@ -250,17 +267,17 @@ export default function ChatBot() {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-white/10 px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1 items-center">
+                <div className="dark:bg-white/10 bg-slate-200/70 px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1 items-center">
                   <span
-                    className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                    className="w-1.5 h-1.5 rounded-full dark:bg-slate-400 bg-slate-500 animate-bounce"
                     style={{ animationDelay: "0ms" }}
                   />
                   <span
-                    className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                    className="w-1.5 h-1.5 rounded-full dark:bg-slate-400 bg-slate-500 animate-bounce"
                     style={{ animationDelay: "150ms" }}
                   />
                   <span
-                    className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                    className="w-1.5 h-1.5 rounded-full dark:bg-slate-400 bg-slate-500 animate-bounce"
                     style={{ animationDelay: "300ms" }}
                   />
                 </div>
@@ -269,20 +286,26 @@ export default function ChatBot() {
             <div ref={bottomRef} />
           </div>
 
-          <div className="px-4 py-3 border-t border-white/10 bg-white/5">
-            <div className="flex items-center gap-2 bg-white/5 rounded-xl px-4 py-2 border border-white/10 focus-within:border-primary/40 transition-colors">
+          {/* Input */}
+          <div className="px-4 py-3 border-t
+            dark:border-white/10 border-[#cdc9de]
+            dark:bg-white/5      bg-slate-50/70">
+            <div className="flex items-center gap-2 rounded-xl px-4 py-2 border
+              dark:bg-white/5      bg-white/60
+              dark:border-white/10 border-[#cdc9de]
+              focus-within:border-primary/40 transition-colors">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKey}
                 placeholder="Escribe tu pregunta..."
-                className="flex-1 bg-transparent text-white text-sm placeholder-slate-600 focus:outline-none"
+                className="flex-1 bg-transparent dark:text-white text-slate-900 text-sm dark:placeholder-slate-600 placeholder-slate-400 focus:outline-none"
               />
               <button
                 onClick={() => sendMessage()}
                 disabled={!input.trim() || loading}
-                className="text-slate-500 hover:text-primary transition-colors disabled:opacity-30"
+                className="dark:text-slate-500 text-slate-400 hover:text-primary transition-colors disabled:opacity-30"
               >
                 <span className="material-symbols-outlined text-[20px]">
                   send
@@ -293,6 +316,7 @@ export default function ChatBot() {
         </div>
       </div>
 
+      {/* FAB */}
       <button
         onClick={() => {
           if (autoOpenTimerRef.current) {
@@ -307,7 +331,7 @@ export default function ChatBot() {
         }}
         className={`group fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500 shadow-2xl active:scale-95 ${
           open
-            ? "bg-slate-800 rotate-90"
+            ? "dark:bg-slate-800 bg-slate-200/80 rotate-90"
             : "bg-gradient-to-tr from-primary via-primary to-fuchsia-500 hover:scale-110"
         }`}
         aria-label="Abrir asistente IA"
@@ -319,7 +343,13 @@ export default function ChatBot() {
           className={`absolute inset-0 rounded-full transition-opacity duration-300 ${open ? "opacity-0" : "opacity-100 bg-white/10 blur-[2px]"}`}
         />
         {!open && (
-          <span className="hidden sm:flex absolute right-[80px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-2xl bg-slate-900/95 backdrop-blur-md border border-white/10 px-4 py-2 text-sm font-medium text-white shadow-2xl opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+          <span className="hidden sm:flex absolute right-[80px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-2xl
+            dark:bg-slate-900/95  bg-white/80
+            backdrop-blur-md border
+            dark:border-white/10  border-[#cdc9de]
+            px-4 py-2 text-sm font-medium
+            dark:text-white text-slate-900
+            shadow-2xl opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
             {hasUnread ? "¡Nuevo mensaje!" : "¿Necesitas ayuda?"}
           </span>
         )}
@@ -335,9 +365,12 @@ export default function ChatBot() {
           />
         )}
         {!open && (
-          <div className="absolute -bottom-1 -left-1 flex items-center gap-1 rounded-full bg-slate-900/90 border border-white/20 px-2 py-0.5 shadow-lg backdrop-blur-sm">
+          <div className="absolute -bottom-1 -left-1 flex items-center gap-1 rounded-full
+            dark:bg-slate-900/90  bg-white/80
+            dark:border-white/20  border-[#cdc9de]
+            border px-2 py-0.5 shadow-lg backdrop-blur-sm">
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[10px] font-bold text-white tracking-wider">
+            <span className="text-[10px] font-bold dark:text-white text-slate-900 tracking-wider">
               IA
             </span>
           </div>
@@ -345,7 +378,8 @@ export default function ChatBot() {
         {hasUnread && !open && (
           <span className="absolute -top-1 -right-1 flex h-5 w-5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex rounded-full h-5 w-5 bg-primary border-2 border-slate-900" />
+            <span className="relative inline-flex rounded-full h-5 w-5 bg-primary border-2
+              dark:border-slate-900 border-white/80" />
           </span>
         )}
       </button>

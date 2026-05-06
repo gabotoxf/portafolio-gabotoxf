@@ -2,8 +2,6 @@
 
 const fotoGabo = "/thumbnail2.png";
 
-
-
 export default function About() {
   return (
     <section
@@ -12,6 +10,7 @@ export default function About() {
     >
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-12 gap-8 lg:gap-12">
+
           {/* IMAGEN */}
           <div className="col-span-12 lg:col-span-5 relative flex justify-center lg:justify-start">
             <div
@@ -20,7 +19,7 @@ export default function About() {
                 relative
                 rounded-2xl sm:rounded-[3rem] lg:rounded-[4rem]
                 overflow-hidden
-                bg-slate-200 dark:bg-slate-800
+                dark:bg-slate-800 bg-[#ddd5f0]
                 border-2 sm:border-4 border-primary/20
                 transition-transform duration-700
                 lg:rotate-3 lg:hover:rotate-0
@@ -39,9 +38,9 @@ export default function About() {
               />
             </div>
 
-            {/* BADGE (visible en mobile y desktop) */}
-            <div className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 w-20 h-20 lg:w-28 lg:h-28 bg-accent-lime rounded-full flex items-center justify-center -rotate-12 border-4 border-background-dark shadow-xl z-20">
-              <span className="text-background-dark font-black text-center leading-tight text-[10px] lg:text-base">
+            {/* BADGE — fondo lime, texto oscuro fijo (funciona en ambos modos) */}
+            <div className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 w-20 h-20 lg:w-28 lg:h-28 bg-accent-lime rounded-full flex items-center justify-center -rotate-12 border-4 dark:border-[#050505] border-[#ede8f5] shadow-xl z-20">
+              <span className="text-slate-900 font-black text-center leading-tight text-[10px] lg:text-base">
                 2+ AÑOS
                 <br />
                 EXP.
@@ -51,18 +50,20 @@ export default function About() {
 
           {/* TEXTO */}
           <div className="col-span-12 lg:col-span-7 flex flex-col justify-center space-y-6 sm:space-y-8">
+
             <h3 className="text-primary font-bold uppercase tracking-widest text-sm">
               SOBRE MÍ
             </h3>
 
-            <h2 className="text-4xl sm:text-5xl font-bold leading-tight">
+            <h2 className="text-4xl sm:text-5xl font-bold leading-tight dark:text-white text-slate-900">
               De la lógica a la estética.
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-              <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
-                Soy
-                <span className="text-transparent mx-1 bg-clip-text bg-gradient-to-r from-primary to-accent-lime">
+              <p className="leading-relaxed dark:text-slate-400 text-slate-600">
+                Soy{" "}
+                {/* Gradiente: en light va de primary a violet (ambos visibles) */}
+                <span className="font-bold mx-1 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-primary dark:to-accent-lime text-violet-700">
                   INGENIERO DE SISTEMAS,
                 </span>
                 con enfoque en desarrollo Full Stack. Me apasiona construir
@@ -71,43 +72,45 @@ export default function About() {
                 artificial.
               </p>
 
-              <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
-                Desde 2022 he trabajado con clientes en proyectos
-                freelance y actualmente desarrollo software de automatización en
-                XIRO INVESTMENT GROUP SAS. Manejo tecnologías como React, Vue.js, Laravel, Next.js y
-                NestJS, y tengo disponibilidad para proyectos freelance donde
-                pueda construir productos digitales.
+              <p className="leading-relaxed dark:text-slate-400 text-slate-600">
+                Desde 2022 he trabajado con clientes en proyectos freelance y
+                actualmente desarrollo software de automatización en XIRO
+                INVESTMENT GROUP SAS. Manejo tecnologías como React, Vue.js,
+                Laravel, Next.js y NestJS, y tengo disponibilidad para proyectos
+                freelance donde pueda construir productos digitales.
               </p>
             </div>
 
-            <div className="pt-6 border-t border-slate-200 dark:border-white/10 flex flex-wrap gap-8 sm:gap-12">
+            {/* Stats */}
+            <div className="pt-6 border-t dark:border-white/10 border-[#cdc9de] flex flex-wrap gap-8 sm:gap-12">
               <div>
-                <span className="block text-2xl font-bold text-accent-lime">
+                <span className="block text-2xl font-bold dark:text-accent-lime text-violet-700">
                   10+
                 </span>
-                <span className="text-xs uppercase tracking-widest opacity-60">
+                <span className="text-xs uppercase tracking-widest dark:text-slate-400 text-slate-500">
                   Proyectos entregados
                 </span>
               </div>
 
               <div>
-                <span className="block text-2xl font-bold text-accent-lime">
+                <span className="block text-2xl font-bold dark:text-accent-lime text-violet-700">
                   4+
                 </span>
-                <span className="text-xs uppercase tracking-widest opacity-60">
+                <span className="text-xs uppercase tracking-widest dark:text-slate-400 text-slate-500">
                   Clientes Satisfechos
                 </span>
               </div>
 
               <div>
-                <span className="block text-2xl font-bold text-accent-lime">
+                <span className="block text-2xl font-bold dark:text-accent-lime text-violet-700">
                   Freelance
                 </span>
-                <span className="text-xs uppercase tracking-widest opacity-60">
+                <span className="text-xs uppercase tracking-widest dark:text-slate-400 text-slate-500">
                   Disponibilidad
                 </span>
               </div>
             </div>
+
           </div>
         </div>
       </div>

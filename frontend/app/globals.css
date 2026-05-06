@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
+@variant dark (&:is(.dark *));
+
 @theme {
   --color-primary: #8c2bee;
   --color-accent-lime: #bef264;
-  --color-background-light: #f7f6f8;
+  --color-background-light: #f7efff;
   --color-background-dark: #050505;
   --color-glass-bg: rgba(25, 16, 34, 0.6);
   --font-display: "Space Grotesk", sans-serif;
@@ -116,9 +118,6 @@ body {
   min-width: 200px;
   padding: 1.5rem 1.25rem;
   border-radius: 1.25rem;
-  background: rgba(15, 10, 25, 0.4);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -128,10 +127,7 @@ body {
 }
 
 .skill-card:hover {
-  border-color: rgba(140, 43, 238, 0.3);
-  background: rgba(140, 43, 238, 0.05);
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px -20px rgba(140, 43, 238, 0.3);
 }
 
 .skill-icon {
@@ -139,26 +135,19 @@ body {
   height: 56px;
   margin: 0 auto 1rem;
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
   transition: all 0.5s ease;
-  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .skill-card:hover .skill-icon {
-  color: #8c2bee;
-  background: rgba(140, 43, 238, 0.1);
-  border-color: rgba(140, 43, 238, 0.2);
   transform: rotate(10deg);
 }
 
 .skill-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #f1f5f9;
   margin-bottom: 0.25rem;
 }
 
@@ -166,6 +155,5 @@ body {
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #64748b;
   font-weight: 600;
 }

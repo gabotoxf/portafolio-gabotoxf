@@ -58,7 +58,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/5 pt-20 pb-10">
+    <footer className="dark:border-t border-slate-300 dark:border-white/5 pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           {/* Columna 1 — Brand */}
@@ -67,14 +67,14 @@ export default function Footer() {
               <span className="text-4xl font-black text-accent-lime font-mono">
                 {"{"}
               </span>
-              <span className="text-4xl font-black text-white font-mono mx-1 group-hover:opacity-80 transition-opacity">
+              <span className="text-4xl font-black dark:text-white text-slate-900 font-mono mx-1 group-hover:opacity-80 transition-opacity">
                 gm
               </span>
               <span className="text-4xl font-black text-accent-lime font-mono">
                 {"}"}
               </span>
             </a>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
+            <p className="text-sm dark:text-slate-500 text-slate-800 leading-relaxed max-w-xs">
               Desarrollador Fullstack enfocado en construir productos digitales
               que resuelven problemas reales.
             </p>
@@ -82,7 +82,7 @@ export default function Footer() {
               {STACK.map((s) => (
                 <span
                   key={s}
-                  className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-400 uppercase tracking-widest"
+                  className="text-[10px] font-bold px-2.5 py-1 rounded-lg dark:bg-white/5 bg-slate-300 dark:border-white/10 border-slate-600 dark:text-slate-400 text-slate-800 uppercase tracking-widest"
                 >
                   {s}
                 </span>
@@ -92,7 +92,7 @@ export default function Footer() {
 
           {/* Columna 2 — Navegación */}
           <div className="space-y-5">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
+            <p className="text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-700">
               Navegación
             </p>
             <ul className="space-y-3">
@@ -101,7 +101,7 @@ export default function Footer() {
                   {isInternal ? (
                     <Link
                       href={href}
-                      className="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2 group"
+                      className="text-sm dark:text-slate-400 text-slate-600 hover:text-primary transition-colors flex items-center gap-2 group"
                     >
                       <span className="w-0 group-hover:w-3 h-px bg-primary transition-all duration-300 overflow-hidden" />
                       {label}
@@ -109,7 +109,7 @@ export default function Footer() {
                   ) : (
                     <a
                       href={href}
-                      className="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2 group"
+                      className="text-sm dark:text-slate-400 text-slate-600 hover:text-primary transition-colors flex items-center gap-2 group"
                     >
                       <span className="w-0 group-hover:w-3 h-px bg-primary transition-all duration-300 overflow-hidden" />
                       {label}
@@ -122,25 +122,25 @@ export default function Footer() {
 
           {/* Columna 3 — Contacto */}
           <div className="space-y-5">
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
+            <p className="text-xs font-bold uppercase tracking-widest dark:text-slate-500 text-slate-400">
               Contacto
             </p>
             <div className="space-y-3">
               <a
                 href="https://wa.link/r1zxye"
                 onClick={handleWhatsApp}
-                className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group"
+                className="flex items-center gap-3 text-sm dark:text-slate-400 text-slate-600 hover:text-primary transition-colors group"
               >
-                <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-primary/40 transition-colors">
+                <span className="w-8 h-8 rounded-lg dark:bg-white/5 bg-slate-100 dark:border-white/10 border-slate-200 flex items-center justify-center group-hover:border-primary/40 transition-colors">
                   <i className="fa-brands fa-whatsapp text-sm" />
                 </span>
                 WhatsApp
               </a>
               <a
                 href="mailto:juanmeza242001@gmail.com"
-                className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors group"
+                className="flex items-center gap-3 text-sm dark:text-slate-400 text-slate-600 hover:text-primary transition-colors group"
               >
-                <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-primary/40 transition-colors">
+                <span className="w-8 h-8 rounded-lg dark:bg-white/5 bg-slate-100 dark:border-white/10 border-slate-200 flex items-center justify-center group-hover:border-primary/40 transition-colors">
                   <span className="material-symbols-outlined text-[16px]">
                     mail
                   </span>
@@ -156,7 +156,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-primary/40 hover:bg-white/10 transition-all"
+                  className="w-9 h-9 rounded-xl dark:bg-white/5 bg-slate-200 dark:border-white/10 border-slate-400 flex items-center justify-center dark:text-slate-400 text-slate-600 hover:text-primary hover:border-primary/40 dark:hover:bg-white/10 hover:bg-slate-300 transition-all"
                 >
                   {icon}
                 </a>
@@ -165,8 +165,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-slate-600 tracking-widest uppercase">
+        <div className="dark:border-t border-slate-300 dark:border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs dark:text-slate-600 text-slate-500 tracking-widest uppercase">
             © {year} Gabriel Meza ·{" "}
             <a
               href="https://instagram.com/gabotoxf"
@@ -177,7 +177,7 @@ export default function Footer() {
               @gabotoxf
             </a>
           </p>
-          <p className="text-xs text-slate-700 flex items-center gap-1.5">
+          <p className="text-xs dark:text-slate-700 text-slate-500 flex items-center gap-1.5">
             Hecho con <span className="text-primary">♥</span> en Sincelejo,
             Colombia
           </p>
